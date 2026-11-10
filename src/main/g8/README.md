@@ -13,8 +13,8 @@ with uv.
 ## Run the examples
 
 ```bash
-sbt "runMain $package$.explore"      # look at the penguins: a scatter plot and a histogram
-sbt "runMain $package$.regression"   # Bayesian linear regression of body mass on flipper length, with NUTS
+sbt "runMain $package$.runExplore"    # look at the penguins: a scatter plot and a histogram
+sbt "runMain $package$.runRegression" # Bayesian linear regression of body mass on flipper length, with NUTS
 ```
 
 The plots open in your browser. `Regression.scala` shows the WitDraw workflow: sites, a model, `observe` to condition
@@ -26,10 +26,10 @@ The [WitDraw quickstart](https://github.com/dimwit-dev/witdraw/blob/main/docs/qu
 1. Put your CSV file into `data/`.
 2. Read it like `Explore.scala` does: `CSV.projectRoot("data/yourfile.csv").toVector`. scautable reads the file when
    it compiles your code, so the rows have a type, with one named field per column, and your editor completes the
-   column names.
+   column names. Access them as fields, e.g. `rows.map(_.x)`: a typo in a name does not compile.
 3. Turn columns into tensors along an axis of your own, with the helpers in `Tables.scala`:
-   - `rows.column["x"].toTensor1(Axis[Sample])` for one column,
-   - `rows.columns[("x", "y")].toTensor2(Axis[Sample], Axis[Feature])` for several.
+   - `rows.map(_.x).toTensor1(Axis[Sample])` for one column,
+   - `rows.map(r => (x = r.x, y = r.y)).toTensor2(Axis[Sample], Axis[Feature])` for several.
 
    `Double` columns become `Float32`, the type plotwit plots take. For other columns, ask for it:
    `toTensor1(Axis[Sample], VType[Float32])`.

@@ -8,7 +8,7 @@ import plotwit.PlotTargets.desktopBrowser
 /** Reads the penguins from data/penguins.csv and looks at them: bill length against bill depth, and the distribution of
   * flipper lengths. The plots open in your browser.
   *
-  * Run it with `sbt "runMain $package$.explore"`.
+  * Run it with `sbt "runMain $package$.runExplore"`.
   */
 object Explore:
   // One label per kind of axis: here, one entry per penguin
@@ -18,18 +18,18 @@ object Explore:
   // (species: String, island: String, bill_length_mm: Double, ..., year: Int)
   val penguins = CSV.projectRoot("data/penguins.csv").toVector
 
-  @main def explore(): Unit =
+  @main def runExplore(): Unit =
     dimwit.initialize()
 
-    val billLength = penguins.column["bill_length_mm"].toTensor1(Axis[Penguin])
-    val billDepth = penguins.column["bill_depth_mm"].toTensor1(Axis[Penguin])
-    val flipperLength = penguins.column["flipper_length_mm"].toTensor1(Axis[Penguin], VType[Float32])
+    val billLength = penguins.map(_.bill_length_mm).toTensor1(Axis[Penguin])
+    val billDepth = penguins.map(_.bill_depth_mm).toTensor1(Axis[Penguin])
+    val flipperLength = penguins.map(_.flipper_length_mm).toTensor1(Axis[Penguin], VType[Float32])
     println("Penguins: " + billLength.shape(Axis[Penguin]))
 
     val bills = plots.scatterPlot(
       billLength,
       billDepth,
-      penguins.column["species"],
+      penguins.map(_.species),
       _.title := "Bills",
       _.encoding.x.title := "bill length (mm)",
       _.encoding.y.title := "bill depth (mm)",

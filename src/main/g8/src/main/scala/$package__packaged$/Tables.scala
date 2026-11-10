@@ -90,7 +90,7 @@ extension [T](values: IterableOnce[T])
 
 extension [K <: Tuple, V <: Tuple](rows: IterableOnce[NamedTuple[K, V]])
   /** The rows as a `Float32` matrix: one entry along `rowAxis` per row, one along `columnAxis` per column, in the
-    * order of the columns. With scautable, select the columns first with `columns[("a", "b")]`.
+    * order of the columns. Pick the columns first as a named tuple, e.g. `rows.map(r => (a = r.a, b = r.b))`.
     */
   def toTensor2[R: Label, C: Label](rowAxis: Axis[R], columnAxis: Axis[C])(using
       row: RowToFloats[V]

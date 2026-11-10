@@ -22,7 +22,7 @@ import witdraw.plots.TracePlot.tracePlot
   * informative. NUTS draws from the posterior in four chains; a trace plot and a summary check that they agree, and
   * the posterior mean line is drawn over the data.
   *
-  * Run it with `sbt "runMain $package$.regression"`.
+  * Run it with `sbt "runMain $package$.runRegression"`.
   */
 object Regression:
   trait Penguin derives Label
@@ -42,12 +42,12 @@ object Regression:
 
   def standardize(t: Tensor1[Penguin, Float32]) = (t -! t.mean) /! t.std
 
-  @main def regression(): Unit =
+  @main def runRegression(): Unit =
     dimwit.initialize()
 
     val penguins = Explore.penguins
-    val flipperLength = penguins.column["flipper_length_mm"].toTensor1(Axis[Penguin], VType[Float32])
-    val bodyMass = penguins.column["body_mass_g"].toTensor1(Axis[Penguin], VType[Float32])
+    val flipperLength = penguins.map(_.flipper_length_mm).toTensor1(Axis[Penguin], VType[Float32])
+    val bodyMass = penguins.map(_.body_mass_g).toTensor1(Axis[Penguin], VType[Float32])
     val x = standardize(flipperLength)
     val y = standardize(bodyMass)
 
