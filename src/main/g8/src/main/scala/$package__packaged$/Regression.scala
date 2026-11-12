@@ -2,7 +2,6 @@ package $package$
 
 import dimwit.*
 import dimwit.stats.{HalfNormal, Normal}
-import io.circe.Json
 import io.github.quafadas.table.*
 import plotwit.*
 import plotwit.PlotTargets.desktopBrowser
@@ -89,7 +88,7 @@ object Regression:
           _.encoding.x.title := "flipper length (mm)",
           _.encoding.y.title := "body mass (g)",
           // Set the line apart from the points, which carry the default colour
-          _.encoding.color := Json.obj("value" -> Json.fromString("#f58518"))
+          _.mark.color := "#f58518"
         )
       )
     )
