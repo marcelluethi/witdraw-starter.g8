@@ -61,7 +61,7 @@ object RegressionPlots:
       linePlot(
         feature,
         grams(ys),
-        _.encoding.x.title := s"$name (mm)",
+        _.encoding.x.title := s"\$name (mm)",
         _.encoding.y.title := "body mass (g)",
         _.mark.color := "#f58518",
         _.mark.strokeWidth := width,
@@ -74,7 +74,7 @@ object RegressionPlots:
       feature,
       bodyMass,
       _.title := title,
-      _.encoding.x.title := s"$name (mm)",
+      _.encoding.x.title := s"\$name (mm)",
       _.encoding.y.title := "body mass (g)"
     )
     // A faint line per draw, and their average (the sum divided by their number) solid
@@ -106,7 +106,7 @@ object RegressionPlots:
           flipperLength,
           bodyMass,
           lines(draws, x1, average), // real flipper lengths, average bill
-          s"$what: body mass against flipper length, at average bill length",
+          s"\$what: body mass against flipper length, at average bill length",
           "flipper length",
           withAverage
         ),
@@ -114,7 +114,7 @@ object RegressionPlots:
           billLength,
           bodyMass,
           lines(draws, average, x2), // average flipper, real bill lengths
-          s"$what: body mass against bill length, at average flipper length",
+          s"\$what: body mass against bill length, at average flipper length",
           "bill length",
           withAverage
         )
